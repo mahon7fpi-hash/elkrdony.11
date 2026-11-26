@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بوابة نتائج الطلاب</title>
+<style>
+:root{--red:#d32f2f;--red2:#ff6659;--blue:#1565c0;--blue2:#5e92f3;--bg:#eef2fb;--card:#fff;--tx:#14213d;--mut:#5b6785;--bd:#d8e0f2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1326;--card:#172042;--tx:#eef1fb;--mut:#a3aed0;--bd:#2a3768;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1326;--card:#172042;--tx:#eef1fb;--mut:#a3aed0;--bd:#2a3768;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;min-height:100vh;background-image:radial-gradient(circle at 10% 0,rgba(211,47,47,.18),transparent 40%),radial-gradient(circle at 90% 10%,rgba(21,101,192,.22),transparent 45%)}
+header{padding:28px 16px 10px;text-align:center;perspective:700px}
+.cube{width:54px;height:54px;margin:0 auto 14px;position:relative;transform-style:preserve-3d;animation:spin 9s linear infinite}
+.cube i{position:absolute;top:0;right:0;bottom:0;left:0;border:2px solid #fff3;display:block}
+.cube i:nth-child(1){background:var(--red);transform:translateZ(27px)}.cube i:nth-child(2){background:var(--blue);transform:rotateY(180deg) translateZ(27px)}
+.cube i:nth-child(3){background:#b71c1c;transform:rotateY(90deg) translateZ(27px)}.cube i:nth-child(4){background:#0d47a1;transform:rotateY(-90deg) translateZ(27px)}
+.cube i:nth-child(5){background:var(--red2);transform:rotateX(90deg) translateZ(27px)}.cube i:nth-child(6){background:var(--blue2);transform:rotateX(-90deg) translateZ(27px)}
+@keyframes spin{to{transform:rotateX(-25deg) rotateY(360deg)}}
+h1{margin:0;font-size:32px;font-size:clamp(26px,5vw,42px);color:var(--blue);text-shadow:1px 1px 0 var(--red),2px 2px 0 var(--red),3px 3px 0 #0003,4px 5px 8px #0004}
+.sub{color:var(--mut);margin:8px 0 0}
+nav .btn{margin:4px}nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:14px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:11px 20px;cursor:pointer;color:#fff;background:linear-gradient(180deg,var(--blue2),var(--blue));box-shadow:0 5px 0 #0d3c7a,0 9px 14px #0003;transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0d3c7a}
+.btn.r{background:linear-gradient(180deg,var(--red2),var(--red));box-shadow:0 5px 0 #8e1b1b,0 9px 14px #0003}.btn.r:active{box-shadow:0 1px 0 #8e1b1b}
+.btn.g{background:var(--card);color:var(--tx);box-shadow:0 4px 0 var(--bd),0 7px 12px #0002}
+.btn.on{outline:3px solid var(--red)}.btn.s{padding:6px 12px;font-size:13px;box-shadow:0 3px 0 #0d3c7a;margin:4px 2px 8px}
+main{max-width:980px;margin:0 auto;padding:0 14px 50px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:22px;margin:0 0 18px;box-shadow:0 18px 30px -12px #0005,0 2px 0 #fff4 inset;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 24px 34px -12px #0006,0 2px 0 #fff4 inset}
+label{display:block;font-weight:700;margin:12px 0 6px;font-size:14px}
+input,select{width:100%;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--tx)}
+input:focus,select:focus{outline:0;border-color:var(--blue)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.msg{padding:12px 14px;border-radius:12px;margin:12px 0;font-weight:600}.err{background:#d32f2f22;color:var(--red)}.ok{background:#1565c022;color:var(--blue)}
+.big{font-size:56px;font-weight:800;color:var(--red);text-shadow:2px 2px 0 var(--blue2);line-height:1}
+.pill{display:inline-block;padding:4px 12px;border-radius:99px;background:var(--blue);color:#fff;font-weight:700;font-size:13px;margin:2px}.pill.r{background:var(--red)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:right;white-space:nowrap}th{color:var(--blue)}
+.podium{display:flex;gap:14px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:14px 0}
+.pod{margin:7px;flex:1;min-width:150px;max-width:230px;text-align:center;padding:16px 10px;border-radius:16px;color:#fff;background:linear-gradient(160deg,var(--blue2),var(--blue));box-shadow:0 10px 0 #0d3c7a,0 16px 22px #0004;transform:rotateX(8deg)}
+.pod.p1{background:linear-gradient(160deg,var(--red2),var(--red));box-shadow:0 10px 0 #8e1b1b,0 16px 22px #0004;padding-bottom:34px}
+.pod b{display:block;font-size:30px}.h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hide{display:none!important}
+#cert{position:fixed;top:0;right:0;bottom:0;left:0;background:#000b;z-index:50;display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}
+.cert{background:#fffdf5;color:#14213d;width:min(760px,100%);padding:34px 28px;text-align:center;border:12px double var(--blue);outline:6px solid var(--red);outline-offset:-26px;border-radius:6px}
+.cert h2{font-size:34px;margin:0 0 10px;color:var(--red)}.cert .nm{font-size:34px;font-weight:800;color:var(--blue);margin:14px 0;border-bottom:3px solid var(--red);display:inline-block;padding:0 24px}
+.cert p{font-size:18px;margin:8px 0}.cert .sig{display:flex;justify-content:space-between;margin-top:34px;font-weight:700}
+@media print{body *{visibility:hidden}#cert,#cert *{visibility:visible}#cert{position:absolute;background:#fff;top:0;right:0;bottom:0;left:0}.np{display:none!important}}
+
+.hero{display:block;width:min(560px,94%);height:auto;margin:0 auto 6px}
+.ill{display:block;margin:0 auto 12px;max-width:62%;height:auto}
+@media (prefers-reduced-motion:no-preference){.hero{animation:heroIn .8s ease-out both}}
+@keyframes heroIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header><svg class="hero" viewBox="0 0 640 240" role="img" aria-label="كتاب وقبعة تخرج وكأس وشهادة">
+<defs>
+<linearGradient id="hB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient>
+<linearGradient id="hR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient>
+<linearGradient id="hG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe082"/><stop offset=".55" stop-color="#ffca28"/><stop offset="1" stop-color="#f9a825"/></linearGradient>
+<radialGradient id="hGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5e92f3" stop-opacity=".45"/><stop offset="1" stop-color="#5e92f3" stop-opacity="0"/></radialGradient>
+<filter id="hSh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#0d1b4c" flood-opacity=".28"/></filter>
+</defs>
+<ellipse cx="320" cy="118" rx="300" ry="112" fill="url(#hGlow)"/>
+<ellipse cx="320" cy="222" rx="245" ry="11" fill="#0d1b4c" opacity=".16"/>
+<g fill="#ffca28"><path d="M70 40l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" opacity=".9"/><path d="M590 34l4 9 10 1-8 7 2 10-9-5-9 5 2-10-8-7 10-1z" opacity=".9"/><circle cx="168" cy="30" r="4"/><circle cx="478" cy="26" r="3.5"/><circle cx="36" cy="132" r="3"/><circle cx="612" cy="140" r="3.5"/></g>
+<g filter="url(#hSh)">
+<path d="M136 126v70c62-10 124-8 184 14 60-22 122-24 184-14v-70z" fill="url(#hB)"/>
+<path d="M320 206c-58-22-118-24-170-15v-68c52-9 112-7 170 14z" fill="#fff"/>
+<path d="M320 206c58-22 118-24 170-15v-68c-52-9-112-7-170 14z" fill="#f4f7ff"/>
+<path d="M320 137v69" stroke="#c5d0ea" stroke-width="2" fill="none"/>
+<g stroke="#c5d0ea" stroke-width="3" stroke-linecap="round" fill="none"><path d="M172 148c36-5 78-3 126 13"/><path d="M172 166c36-5 78-3 126 13"/><path d="M342 161c48-16 90-18 126-13"/><path d="M342 179c48-16 90-18 126-13"/></g>
+<path d="M392 120h30v48l-15-11-15 11z" fill="url(#hR)"/>
+</g>
+<g filter="url(#hSh)">
+<path d="M262 76v34c0 14 116 14 116-0v-34l-58 22z" fill="#1b2c60" stroke="#7fa6f7" stroke-opacity=".5" stroke-width="2" stroke-linejoin="round"/>
+<path d="M320 26l112 40-112 40-112-40z" fill="#22356b" stroke="#7fa6f7" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round"/>
+<path d="M320 26l112 40-112 40z" fill="#24366b" opacity=".6"/>
+<path d="M432 66v42" stroke="#ffca28" stroke-width="3.5" stroke-linecap="round"/>
+<circle cx="432" cy="112" r="7" fill="url(#hR)"/><path d="M432 118l-6 18M432 118l6 18" stroke="#d32f2f" stroke-width="3.5" stroke-linecap="round"/>
+<circle cx="320" cy="66" r="6" fill="url(#hG)"/>
+</g>
+<g filter="url(#hSh)" transform="rotate(-9 92 150)">
+<rect x="40" y="86" width="104" height="128" rx="10" fill="#fff"/>
+<rect x="40" y="86" width="104" height="26" rx="10" fill="url(#hR)"/><rect x="40" y="100" width="104" height="12" fill="url(#hR)"/>
+<g stroke="#c5d0ea" stroke-width="4" stroke-linecap="round"><path d="M54 132h76"/><path d="M54 148h58"/><path d="M54 164h68"/></g>
+<circle cx="112" cy="190" r="17" fill="url(#hB)"/><path d="M103 190l7 7 12-14" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g fill="#fff" opacity=".95"><circle cx="58" cy="99" r="3"/><circle cx="70" cy="99" r="3"/></g>
+</g>
+<g filter="url(#hSh)">
+<path d="M520 92h-24c-2 24 8 38 26 42M580 92h24c2 24-8 38-26 42" fill="none" stroke="url(#hG)" stroke-width="9" stroke-linecap="round"/>
+<path d="M516 78h68v36c0 24-14 40-34 40s-34-16-34-40z" fill="url(#hG)"/>
+<path d="M526 84h12v54c-8-6-12-18-12-30z" fill="#fff" opacity=".35"/>
+<path d="M550 98l5 10 11 2-8 8 2 11-10-6-10 6 2-11-8-8 11-2z" fill="#fff" opacity=".95"/>
+<rect x="543" y="154" width="14" height="26" fill="#f9a825"/>
+<rect x="520" y="178" width="60" height="12" rx="4" fill="url(#hR)"/><rect x="508" y="188" width="84" height="16" rx="5" fill="url(#hB)"/>
+</g>
+</svg><h1 id="ttl">بوابة نتائج الامتحانات</h1><p class="sub" id="sub">ابحث عن نتيجتك برقم المسلسل والاسم</p></header>
+<nav id="nav"></nav>
+<main id="app"><div class="card">جارٍ التحميل…</div></main>
+<div id="cert" class="hide"></div>
+<script>
+const MODE="student";
+(()=>{const bar=m=>{let b=document.getElementById("errb");if(!b){b=document.createElement("div");b.id="errb";b.style.cssText="position:fixed;bottom:0;left:0;right:0;background:#b71c1c;color:#fff;padding:10px;z-index:99;font-size:13px";document.body.appendChild(b)}b.textContent="حدث خطأ: "+m+" — صوّر الشاشة وأرسلها للمطوّر"};addEventListener("error",e=>bar(e.message));addEventListener("unhandledrejection",e=>bar(String(e.reason&&e.reason.message||e.reason)))})();
+const errMsg=x=>{const m=String(x&&x.message||x);if(m.startsWith("AUTH:")){const c=m.slice(5);return /NOLOGIN/.test(c)?"لم تسجّل الدخول بعد: افتح الإعدادات وأدخل البريد وكلمة المرور":/API key|API_KEY|INVALID_API/i.test(c)?"مفتاح الواجهة (Web API Key) غير صحيح":/INVALID_LOGIN_CREDENTIALS|INVALID_PASSWORD|EMAIL_NOT_FOUND|INVALID_EMAIL|MISSING_PASSWORD/.test(c)?"البريد أو كلمة المرور غير صحيحة":/OPERATION_NOT_ALLOWED|PASSWORD_LOGIN_DISABLED/.test(c)?"فعّل تسجيل الدخول بالبريد وكلمة المرور من Firebase Authentication":/CONFIGURATION_NOT_FOUND/.test(c)?"لم تُفعَّل خدمة Authentication في Firebase (اضغط Get started)":/TOO_MANY/.test(c)?"محاولات كثيرة، انتظر قليلًا ثم أعد المحاولة":/USER_DISABLED/.test(c)?"هذا الحساب معطّل في Firebase":/TOKEN_EXPIRED|INVALID_REFRESH_TOKEN|USER_NOT_FOUND/.test(c)?"انتهت صلاحية الدخول: سجّل الدخول من جديد من الإعدادات":c}return /HTTP 40[13]/.test(m)?"رُفض الطلب: سجّل الدخول من الإعدادات وتأكد أن بريدك مكتوب في قواعد Firebase":/HTTP 404/.test(m)?"رابط قاعدة البيانات غير صحيح":/Failed to fetch|NetworkError|Load failed/i.test(m)?"لا يوجد اتصال بقاعدة البيانات (تحقق من الإنترنت ومن الرابط)":m};
+const EMBED=null;
+const CFG={"url":"https://natijati-a9a53-default-rtdb.europe-west1.firebasedatabase.app","apiKey":"","reps":["https://natijati2-default-rtdb.europe-west1.firebasedatabase.app","https://natijati3-default-rtdb.europe-west1.firebasedatabase.app"]};
+let LS={};try{LS=JSON.parse(localStorage.getItem("rp_cfg")||"{}")}catch(e){}
+const URLB=(LS.url||CFG.url||"").replace(/\/+$/,""),KEY=LS.apiKey||CFG.apiKey||"";
+let saveCfg;
+
+const REPS=((MODE==="teacher"?(LS.reps||CFG.reps):CFG.reps)||[]).map(x=>typeof x==="string"?{url:x.replace(/\/+$/,""),apiKey:""}:{url:String(x&&x.url||"").replace(/\/+$/,""),apiKey:(x&&x.apiKey)||""}).filter(r=>/^https:\/\//.test(r.url)&&r.url!==URLB);
+const REPOK=u=>/^https:\/\/[a-z0-9.-]+\.(firebasedatabase\.app|firebaseio\.com)$/i.test(String(u));
+const RA={m:{},st(){try{return JSON.parse(localStorage.getItem("rp_auth_r")||"{}")}catch(e){return{}}},
+async login(em,pw,key){const r=await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+encodeURIComponent(key),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:em,password:pw,returnSecureToken:true})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error("AUTH:"+((j.error&&j.error.message)||"HTTP "+r.status));this.m[key]={tok:j.idToken,exp:Date.now()+(parseInt(j.expiresIn,10)-120)*1000};const o=this.st();o[key]={email:em,refresh:j.refreshToken};try{localStorage.setItem("rp_auth_r",JSON.stringify(o))}catch(e){}},
+async token(key){const c=this.m[key];if(c&&Date.now()<c.exp)return c.tok;const o=this.st(),rf=o[key]&&o[key].refresh;if(!rf)throw new Error("AUTH:NOLOGIN");const r=await fetch("https://securetoken.googleapis.com/v1/token?key="+encodeURIComponent(key),{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"grant_type=refresh_token&refresh_token="+encodeURIComponent(rf)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error("AUTH:"+((j.error&&j.error.message)||"HTTP "+r.status));this.m[key]={tok:j.id_token,exp:Date.now()+(parseInt(j.expires_in,10)-120)*1000};if(j.refresh_token&&j.refresh_token!==rf){o[key].refresh=j.refresh_token;try{localStorage.setItem("rp_auth_r",JSON.stringify(o))}catch(e){}}return this.m[key].tok}};
+const repTok=r=>r.apiKey&&r.apiKey!==KEY?RA.token(r.apiKey):AU.token();
+const repName=u=>String(u).replace(/^https:\/\//,"").split(".")[0];
+function parseReps(){const t=$("#cr");return(t?t.value:"").split(/\n/).map(l=>l.trim()).filter(Boolean).map(l=>{const a=l.split("|").map(x=>x.trim());return{url:(a[0]||"").replace(/\/+$/,""),apiKey:a[1]||""}}).filter(r=>/^https:\/\//.test(r.url))}
+const PC={v:0,j:null};
+async function readPool(p){let ex=[];try{ex=JSON.parse(localStorage.getItem("rp_reps")||"[]")}catch(e){}if(!Array.isArray(ex))ex=[];
+const pool=[URLB].concat(REPS.map(r=>r.url),ex.filter(REPOK)).filter((u,i,a)=>u&&a.indexOf(u)===i);
+let k=NaN;try{k=parseInt(localStorage.getItem("rp_pick"),10)}catch(e){}if(!(k>=0)){k=Math.floor(Math.random()*1e6);try{localStorage.setItem("rp_pick",String(k))}catch(e){}}
+let last=null,empty=false,stale=false;
+for(let i=0;i<pool.length;i++){const u=pool[(k+i)%pool.length];try{if(p==="public"&&PC.j){const q=await fetch(u+"/public/updatedAt.json");if(q.ok){const v=await q.json();if(v===PC.v)return PC.j}}const r=await fetch(u+"/"+p+".json");if(!r.ok){last=new Error("HTTP "+r.status);continue}const j=await r.json();if(j==null||(p==="public"&&typeof j==="object"&&!j.updatedAt)){empty=true;continue}
+if(p==="public"&&PC.j&&j.updatedAt<PC.v){stale=true;continue}
+if(i>0){try{localStorage.setItem("rp_pick",String((k+i)%pool.length))}catch(e){}}
+if(p==="public"&&Array.isArray(j.replicas)){try{localStorage.setItem("rp_reps",JSON.stringify(j.replicas.filter(REPOK)))}catch(e){}}
+if(p==="public"){PC.v=j.updatedAt;PC.j=j}return j}catch(e){last=e}}
+if(PC.j&&(empty||stale))return PC.j;if(empty)return null;throw last||new Error("HTTP 0")}
+async function mirrorPub(pub,ps){S.repSig=S.repSig||{};S.repFail=S.repFail||{};S.repErr=S.repErr||{};
+await Promise.all(REPS.map(async r=>{if(S.repSig[r.url]===ps)return;if(Date.now()-(S.repFail[r.url]||0)<30000)return;
+try{const t=await repTok(r);const x=await fetch(r.url+"/public.json?auth="+encodeURIComponent(t),{method:"PUT",body:JSON.stringify(pub)});if(!x.ok)throw new Error("HTTP "+x.status);S.repSig[r.url]=ps;delete S.repFail[r.url];delete S.repErr[r.url]}catch(e){S.repFail[r.url]=Date.now();S.repErr[r.url]=errMsg(e)}}));
+return REPS.filter(r=>S.repSig[r.url]!==ps).map(r=>repName(r.url)+": "+(S.repErr[r.url]||"قيد المحاولة"))}
+/*AU-START*/const AU={tok:"",exp:0,p:null,
+st(){try{return JSON.parse(localStorage.getItem("rp_auth")||"{}")}catch(e){return{}}},
+ok(){return !!(this.tok||this.st().refresh)},
+keep(em,rf){try{localStorage.setItem("rp_auth",JSON.stringify({email:em,refresh:rf}))}catch(e){}},
+out(){this.tok="";this.exp=0;this.p=null;try{localStorage.removeItem("rp_auth")}catch(e){}},
+async login(em,pw,key){const r=await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+encodeURIComponent(key),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:em,password:pw,returnSecureToken:true})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error("AUTH:"+((j.error&&j.error.message)||"HTTP "+r.status));this.tok=j.idToken;this.exp=Date.now()+(parseInt(j.expiresIn,10)-120)*1000;this.keep(em,j.refreshToken)},
+token(){if(this.tok&&Date.now()<this.exp)return Promise.resolve(this.tok);if(this.p)return this.p;const rf=this.st().refresh;if(!rf)return Promise.reject(new Error("AUTH:NOLOGIN"));this.p=(async()=>{try{const r=await fetch("https://securetoken.googleapis.com/v1/token?key="+encodeURIComponent(KEY),{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"grant_type=refresh_token&refresh_token="+encodeURIComponent(rf)});const j=await r.json().catch(()=>({}));if(!r.ok){const c=(j.error&&j.error.message)||"HTTP "+r.status;if(/TOKEN_EXPIRED|INVALID_REFRESH_TOKEN|USER_NOT_FOUND|USER_DISABLED/.test(c))this.out();throw new Error("AUTH:"+c)}this.tok=j.id_token;this.exp=Date.now()+(parseInt(j.expires_in,10)-120)*1000;this.keep(this.st().email,j.refresh_token||rf);return this.tok}finally{this.p=null}})();return this.p}};/*AU-END*/
+const LK="rp_data";
+let MEM=null;const loc=()=>{if(MEM)return MEM;try{return JSON.parse(localStorage.getItem(LK)||"{}")}catch(e){return{}}};
+const DB={async req(m,p,b){
+  if(!URLB){let d=m==="GET"&&EMBED?EMBED:loc();if(m==="GET")return d;const k=p.split("/");let t=d;k.slice(0,-1).forEach(x=>t=t[x]=t[x]||{});if(m==="PUT")t[k[k.length-1]]=b;else delete t[k[k.length-1]];try{localStorage.setItem(LK,JSON.stringify(d));MEM=null}catch(e){MEM=d;S.warnMem=true}return null}
+  let r;try{const readPath=(MODE==="student"&&m==="GET"&&p==="")?"public":p;if(MODE==="student"&&m==="GET"){const jv=await readPool(readPath);r={json:()=>Promise.resolve(jv)}}else{const q=MODE==="student"?"":"?auth="+encodeURIComponent(await AU.token());r=await fetch(URLB+"/"+readPath+".json"+q,{method:m,body:b===undefined?undefined:JSON.stringify(b)});if(!r.ok)throw new Error("HTTP "+r.status)}}catch(x){if(m==="GET"&&EMBED){S.stale=true;return EMBED}throw x}S.stale=false;return r.json()},put(p,b){return this.req("PUT",p,b)},del(p){return this.req("DELETE",p)},get(){return this.req("GET","")}};
+const claude={use:async n=>n==="downloads"?{save:async({filename,data})=>{const a=document.createElement("a");a.href=URL.createObjectURL(data);a.download=filename;document.body.appendChild(a);a.click();a.remove()}}:null};
+const $=s=>document.querySelector(s);
+const ILL={search:`<svg class="ill" width="150" viewBox="0 0 160 120" role="img" aria-label="البحث عن النتيجة"><defs><linearGradient id="sB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient><linearGradient id="sR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient><filter id="sSh" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0d1b4c" flood-opacity=".28"/></filter></defs>
+<ellipse cx="80" cy="112" rx="58" ry="6" fill="#0d1b4c" opacity=".14"/>
+<g filter="url(#sSh)"><rect x="28" y="12" width="78" height="94" rx="9" fill="#fff"/><rect x="28" y="12" width="78" height="20" rx="9" fill="url(#sR)"/><rect x="28" y="24" width="78" height="8" fill="url(#sR)"/>
+<g stroke="#c5d0ea" stroke-width="4" stroke-linecap="round"><path d="M40 46h54"/><path d="M40 60h38"/><path d="M40 74h48"/></g><g fill="#fff"><circle cx="40" cy="22" r="3"/><circle cx="50" cy="22" r="3"/></g></g>
+<g filter="url(#sSh)"><circle cx="98" cy="70" r="26" fill="#e8f0ff" fill-opacity=".85" stroke="url(#sB)" stroke-width="9"/><path d="M117 90l22 22" stroke="url(#sR)" stroke-width="11" stroke-linecap="round"/><path d="M86 70l9 9 17-19" fill="none" stroke="#1565c0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,trophy:`<svg class="ill" width="230" viewBox="0 0 230 150" role="img" aria-label="منصة التتويج"><defs><linearGradient id="tG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe082"/><stop offset=".55" stop-color="#ffca28"/><stop offset="1" stop-color="#f9a825"/></linearGradient><linearGradient id="tB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient><linearGradient id="tR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient><filter id="tSh" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0d1b4c" flood-opacity=".3"/></filter></defs>
+<ellipse cx="115" cy="143" rx="104" ry="6" fill="#0d1b4c" opacity=".14"/>
+<g filter="url(#tSh)"><rect x="12" y="98" width="62" height="42" rx="5" fill="url(#tB)"/><rect x="156" y="108" width="62" height="32" rx="5" fill="url(#tB)"/><rect x="78" y="82" width="74" height="58" rx="5" fill="url(#tR)"/></g>
+<g fill="#fff" font-family="Segoe UI,Tahoma,Arial,sans-serif" font-weight="800" text-anchor="middle"><text x="115" y="124" font-size="30">1</text><text x="43" y="128" font-size="22">2</text><text x="187" y="130" font-size="20">3</text></g>
+<g filter="url(#tSh)"><path d="M92 26H78c-1 16 5 26 16 28M138 26h14c1 16-5 26-16 28" fill="none" stroke="url(#tG)" stroke-width="5" stroke-linecap="round"/><path d="M92 14h46v22c0 15-9 26-23 26s-23-11-23-26z" fill="url(#tG)"/><path d="M98 18h7v34c-5-4-7-11-7-18z" fill="#fff" opacity=".35"/><rect x="110" y="60" width="10" height="14" fill="#f9a825"/><rect x="98" y="72" width="34" height="10" rx="3" fill="url(#tG)"/><path d="M115 22l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff"/></g>
+<g fill="#ffca28"><circle cx="50" cy="40" r="3"/><circle cx="188" cy="46" r="3.5"/><path d="M34 70l2 5 5 .5-4 3.5 1.2 5-4.2-2.7-4.2 2.7 1.2-5-4-3.5 5-.5z"/><path d="M200 76l2 5 5 .5-4 3.5 1.2 5-4.2-2.7-4.2 2.7 1.2-5-4-3.5 5-.5z"/></g></svg>`,seal:`<svg width="96" height="110" viewBox="0 0 100 114" role="img" aria-label="ختم التكريم" style="display:block;margin:0 auto 6px"><defs><linearGradient id="cG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe082"/><stop offset=".55" stop-color="#ffca28"/><stop offset="1" stop-color="#f9a825"/></linearGradient><linearGradient id="cR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient><linearGradient id="cB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient></defs>
+<path d="M30 66l-14 44 18-8 8 10 12-40z" fill="url(#cR)"/><path d="M70 66l14 44-18-8-8 10-12-40z" fill="url(#cB)"/>
+<g fill="url(#cG)"><circle cx="50" cy="42" r="38"/>
+<g stroke="url(#cG)" stroke-width="0"><path d="M50 0l7 7 10-3 3 10 10 3-3 10 7 7-7 7 3 10-10 3-3 10-10-3-7 7-7-7-10 3-3-10-10-3 3-10-7-7 7-7-3-10 10-3 3-10 10 3z" transform="translate(0 0) scale(1) " opacity="0"/></g></g>
+<circle cx="50" cy="42" r="38" fill="url(#cG)" stroke="#f9a825" stroke-width="3"/><circle cx="50" cy="42" r="30" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-dasharray="2 4"/><circle cx="50" cy="42" r="24" fill="#fff" fill-opacity=".92"/>
+<path d="M50 27l5.6 11.4 12.6 1.8-9.1 8.9 2.1 12.5L50 55.6l-11.2 6 2.1-12.5-9.1-8.9 12.6-1.8z" fill="url(#cR)"/></svg>`,empty:`<svg class="ill" width="150" viewBox="0 0 160 120" role="img" aria-label="البحث عن النتيجة"><defs><linearGradient id="eB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient><linearGradient id="eR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient><filter id="eSh" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0d1b4c" flood-opacity=".28"/></filter></defs>
+<ellipse cx="80" cy="112" rx="58" ry="6" fill="#0d1b4c" opacity=".14"/>
+<g filter="url(#eSh)"><rect x="28" y="12" width="78" height="94" rx="9" fill="#fff"/><rect x="28" y="12" width="78" height="20" rx="9" fill="url(#eR)"/><rect x="28" y="24" width="78" height="8" fill="url(#eR)"/>
+<g stroke="#c5d0ea" stroke-width="4" stroke-linecap="round"><path d="M40 46h54"/><path d="M40 60h38"/><path d="M40 74h48"/></g><g fill="#fff"><circle cx="40" cy="22" r="3"/><circle cx="50" cy="22" r="3"/></g></g>
+<g filter="url(#eSh)"><circle cx="98" cy="70" r="26" fill="#e8f0ff" fill-opacity=".85" stroke="url(#eB)" stroke-width="9"/><path d="M117 90l22 22" stroke="url(#eR)" stroke-width="11" stroke-linecap="round"/><path d="M86 70l9 9 17-19" fill="none" stroke="#1565c0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`};
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const S={exams:[],set:{teacher:"المعلم",title:"بوابة نتائج الامتحانات",pass:50,topN:3,modeSerial:true,modeName:true},admin:MODE==="teacher",tab:"s",db:null,user:null,sel:"",res:null,prev:null,note:null,loaded:false};
+const digits=s=>String(s==null?"":s).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+const normName=s=>digits(s).toLowerCase().replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ").trim();
+const normSerial=s=>digits(s).replace(/\s+/g,"").toLowerCase().replace(/^0+(?=\d)/,"");
+const grade=(v,m)=>{const p=v/m*100;return p<S.set.pass?"راسب":p>=90?"ممتاز":p>=80?"جيد جدًا":p>=65?"جيد":"مقبول"};
+const ranks=e=>{const r=[...e.rows].sort((a,b)=>b.v-a.v);let k=0,last=null,i=0;return r.map(x=>{i++;if(x.v!==last){k=i;last=x.v}return Object.assign({},x,{k})})};
+const dateS=()=>new Date().toLocaleDateString("ar-EG");
+const slug=s=>normName(s).replace(/[^\w\u0600-\u06FF]+/g,"-").slice(0,60)||"exam";
+
+function nav(){
+  const t=[["s","🔎 نتيجتي"],["h","🏆 لوحة الشرف"]];
+  if(S.admin)t.push(["u","⬆️ رفع نتائج"],["m","📋 الامتحانات"],["c","⚙️ الإعدادات"]);
+  $("#nav").innerHTML=t.map(([k,l])=>`<button class="btn ${k==="s"||k==="h"?"":"r"} ${S.tab===k?"on":""}" data-tab="${k}">${l}</button>`).join("");
+}
+function visExams(){return S.admin&&S.tab!=="s"&&S.tab!=="h"?S.exams:S.exams.filter(e=>e.published)}
+function examOpts(list,all){return (all?`<option value="">كل الامتحانات</option>`:"")+list.map(e=>`<option value="${esc(e.id)}" ${S.sel===e.id?"selected":""}>${esc(e.name)}</option>`).join("")}
+
+function render(){
+  nav();$("#ttl").textContent=S.set.title;
+  const A=$("#app");
+  if(!S.loaded){A.innerHTML=`<div class="card">جارٍ تحميل البيانات…</div>`;return}
+  if(!URLB&&!EMBED&&MODE!=="teacher"&&!S.exams.some(e=>e.published)){A.innerHTML=`<div class="card"><div class="msg err">هذه النسخة لا تحتوي على نتائج. افتح ملف الطلاب المحدَّث الذي أرسله لك المعلم (وليس هذه النسخة الفارغة)، أو اطلب منه إرساله من جديد.</div></div>`;return}
+  if(!S.db&&MODE!=="teacher"){A.innerHTML=`<div class="card"><div class="msg err">تعذر تحميل النتائج الآن${S.err?" ("+esc(S.err)+")":""}. تأكد من اتصال الإنترنت ثم أعد المحاولة.</div></div>`;return}
+  ({s:rStudent,h:rHonor,u:rUpload,m:rManage,c:rSettings})[S.tab]();
+  if(MODE==="teacher"){const w=[];if(!S.db)w.push("تعذر الاتصال بقاعدة البيانات"+(S.err?": "+S.err:"")+". راجع تبويب الإعدادات.");if(S.warnMem)w.push("متصفحك لا يسمح بحفظ البيانات داخل الملف، وستضيع النتائج عند إغلاق الصفحة. افتح teacher.html في Chrome على الكمبيوتر أو اربط قاعدة بيانات من الإعدادات.");if(w.length)$("#app").insertAdjacentHTML("afterbegin",w.map(m=>`<div class="msg err">${esc(m)}</div>`).join(""))}
+}
+function rStudent(){
+  const L=S.exams.filter(e=>e.published),Q=S.q||{s:"",n:""},st=S.set;let out="";
+  const modes=[["both","الاسم + المسلسل"]];if(st.modeSerial!==false)modes.push(["serial","المسلسل فقط"]);if(st.modeName!==false)modes.push(["name","الاسم فقط"]);
+  if(!modes.find(m=>m[0]===S.qm))S.qm="both";const qm=S.qm;
+  if(S.res){out=S.res.err?`<div class="msg err">${esc(S.res.err)}</div>`:S.res.list.map(r=>`<div class="card"><div class="h"><div><span class="pill r">${esc(r.e.name)}</span><h2 style="margin:8px 0">${esc(r.n)}</h2><div>رقم المسلسل: <b>${esc(r.s)}</b></div></div><div style="text-align:center"><div class="big">${r.v}<small style="font-size:22px;color:var(--mut)"> / ${r.e.max}</small></div><span class="pill">${grade(r.v,r.e.max)}</span><span class="pill r">الترتيب ${r.k} من ${r.e.rows.length}</span></div></div>${r.k<=S.set.topN?`<p><button class="btn r" data-cert="${esc(r.e.id)}|${esc(r.s)}">🎓 شهادة تقدير وتكريم</button></p>`:""}</div>`).join("")}
+  $("#app").innerHTML=`<div class="card">${ILL.search}<h2 style="margin-top:0;text-align:center">ابحث عن نتيجتك</h2>${L.length?`${modes.length>1?`<p>${modes.map(([k,l])=>`<button class="btn s ${qm===k?"":"g"}" data-qm="${k}">${l}</button>`).join(" ")}</p>`:""}<div class="row"><div><label>الامتحان</label><select id="fx">${examOpts(L,true)}</select></div>${qm!=="serial"?`<div><label>الاسم (كلمتان على الأقل)</label><input id="fn" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(Q.n)}" placeholder="الاسم كما في الكشف"></div>`:""}${qm!=="name"?`<div><label>رقم المسلسل</label><input id="fs" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(Q.s)}" placeholder="كما أرسله المعلم"></div>`:""}</div><p><button class="btn" id="go">بحث</button></p>${S.stale?`<p class="sub">تعذر الاتصال بالخادم، تُعرض النتائج المحفوظة داخل الملف.</p>`:S.upd&&URLB?`<p class="sub">النتائج تتحدث تلقائيًا · آخر تحديث ${S.upd.toLocaleTimeString("ar-EG")}</p>`:""}`:`${ILL.empty}<div class="msg ok">لم تُنشر نتائج بعد. ستظهر هنا تلقائيًا عند نشرها.</div>`}</div>`+out;
+  const g=()=>{const sv=$("#fs")?$("#fs").value:"",nv=$("#fn")?$("#fn").value:"",s=normSerial(sv),nm=normName(nv),tok=nm?nm.split(" "):[],x=$("#fx").value;S.sel=x;S.q={s:sv,n:nv};
+    if((qm!=="serial"&&tok.length<2)||(qm!=="name"&&!s)){S.res={err:qm==="both"?"اكتب الاسم (كلمتان على الأقل) ورقم المسلسل معًا.":qm==="serial"?"اكتب رقم المسلسل.":"اكتب الاسم (كلمتان على الأقل)."};return render()}
+    const list=[];let amb=false;
+    L.filter(e=>!x||e.id===x).forEach(e=>{const m=ranks(e).filter(r=>(qm==="name"||normSerial(r.s)===s)&&(qm==="serial"||tok.every(t=>normName(r.n).split(" ").includes(t))));if(m.length>1&&qm==="name")amb=true;m.forEach(r=>list.push(Object.assign({},r,{e})))});
+    S.res=amb?{err:"يوجد أكثر من طالب بهذا الاسم. استخدم البحث بالاسم + المسلسل."}:list.length?{list}:{err:"لا توجد نتيجة مطابقة. تأكد من البيانات كما في الكشف."};render()};
+  if($("#go")){$("#go").onclick=g;["#fn","#fs"].forEach(i=>{const e=$(i);if(e)e.addEventListener("keydown",ev=>{if(ev.key==="Enter")g()})})}
+}
+function rHonor(){
+  const L=S.exams.filter(e=>e.published);if(!S.sel&&L[0])S.sel=L[0].id;
+  const e=L.find(x=>x.id===S.sel);
+  const top=e?ranks(e).filter(r=>r.k<=S.set.topN):[];
+  $("#app").innerHTML=`<div class="card">${ILL.trophy}<h2 style="margin-top:0;text-align:center">🏆 لوحة الشرف</h2>${L.length?`<select id="fx">${examOpts(L)}</select>`:`<div class="msg ok">لا توجد نتائج منشورة.</div>`}<div class="podium">${top.map(r=>`<div class="pod ${r.k===1?"p1":""}"><b>${r.k===1?"🥇":r.k===2?"🥈":r.k===3?"🥉":"🎖️"} ${r.k}</b>${esc(r.n)}<div>${r.v} / ${e.max}</div><button class="btn g s" style="margin-top:8px" data-cert="${esc(e.id)}|${esc(r.s)}">شهادة</button></div>`).join("")}</div></div>`;
+  if($("#fx"))$("#fx").onchange=ev=>{S.sel=ev.target.value;render()}
+}
+const clean=s=>String(s==null?"":s).replace(/[\u200b-\u200f\u202a-\u202e\ufeff\u00a0]/g," ").replace(/\s+/g," ").trim();
+const AR=/[\u0600-\u06FF]/;
+const hdrRole=h=>/مسلسل|جلوس|سريال|serial|seat|كود|code|رقم|^id$|^no\b|^#$|^م$/.test(h)?"s":/درج|نتيج|مجموع|score|total|mark|grade|النهاي|الكلي/.test(h)?"v":/اسم|name|طالب|student/.test(h)?"n":null;
+function pv(x){if(typeof x==="number")return isFinite(x)?x:NaN;let t=digits(x).replace(/[\u200b-\u200f]/g,"").replace(/٬/g,"").replace(/٫/g,".").trim();if(/^(غ|غائب|غياب|غايب|absent|ab|-+|—)$/i.test(t))return "abs";t=t.split("/")[0].trim();if(/^-?\d+,\d+$/.test(t))t=t.replace(",",".");t=t.replace(/,/g,"");return /^\d+(\.\d+)?$/.test(t)?parseFloat(t):NaN}
+function detect(rows,fh){
+  let hi=-1,best=1;
+  if(fh===undefined){for(let i=0;i<Math.min(rows.length,20);i++){const k=new Set(rows[i].map(c=>hdrRole(normName(c))).filter(Boolean)).size;if(k>best){best=k;hi=i}}}else hi=fh;
+  const m={s:-1,n:-1,v:-1},H=hi>=0&&rows[hi]?rows[hi].map(c=>hdrRole(normName(c))):[];
+  const sc=x=>/قومي|هاتف|موبايل|تليفون|phone|mobile/.test(x)?0:/جلوس|مسلسل|سريال|serial|seat/.test(x)?3:/كود|code|^id$|^رقم/.test(x)?2:/^م$|^#$|^no\b/.test(x)?1:0;
+  m.s=-1;{let bs=0;(hi>=0&&rows[hi]?rows[hi]:[]).forEach((c,i)=>{const v=sc(normName(c));if(v>bs){bs=v;m.s=i}})}
+  m.n=H.indexOf("n");
+  const vs=H.map((r,i)=>r==="v"?i:-1).filter(i=>i>=0);
+  const pk=(a,b)=>a===undefined?b:a;m.v=vs.length?pk(vs.find(i=>/مجموع|الكلي|total|النهاي/.test(normName(rows[hi][i]))),pk(vs.find(i=>/درج|score|mark/.test(normName(rows[hi][i]))),vs[0])):-1;
+  const data=rows.slice(hi+1,hi+61),W=Math.max(0,...rows.slice(0,60).map(r=>r.length));
+  const st=c=>{const v=data.map(r=>clean(r[c])).filter(Boolean),n=v.length||1;return{len:v.length,num:v.filter(x=>typeof pv(x)==="number").length/n,multi:v.filter(x=>x.split(" ").length>=2&&!/^[\d\s.\/]+$/.test(x)).length/n,uniq:new Set(v).size/n,mx:Math.max(0,...v.map(x=>x.length))}};
+  const ST=Array.from({length:W},(_,c)=>st(c)),used=()=>Object.values(m);
+  if(m.n<0){let b=-1,bs=.4;ST.forEach((s,c)=>{if(!used().includes(c)&&s.multi>bs){bs=s.multi;b=c}});m.n=b}
+  if(m.s<0){let b=-1,bs=.79;ST.forEach((s,c)=>{if(!used().includes(c)&&s.len&&s.uniq>bs&&s.mx<=14){bs=s.uniq;b=c}});m.s=b}
+  if(m.v<0){let b=-1,bs=.6;ST.forEach((s,c)=>{if(!used().includes(c)&&s.len&&s.num>=bs){bs=s.num;b=c}});m.v=b}
+  return{hi,map:m};
+}
+function extract(t){
+  const{rows,hi,map:m}=t,out=[],errs=[],seen=new Map();let read=0,conf=0;
+  if(m.s<0||m.n<0||m.v<0)return{out,errs:["اختر الأعمدة الثلاثة (المسلسل والاسم والدرجة) من القوائم أعلاه."],read:0,bad:true,conf:0};
+  const hn=hi>=0&&rows[hi]?normName(rows[hi][m.n]):"";
+  for(let i=hi+1;i<rows.length;i++){
+    const r=rows[i];if(!r||r.every(c=>clean(c)===""))continue;
+    const row=i+1,nm=clean(r[m.n]);if(hn&&normName(nm)===hn)continue;read++;
+    let s=r[m.s];s=clean(typeof s==="number"?String(s):digits(s));const v=pv(r[m.v]);
+    if(!s||!nm){errs.push(`صف ${row}: ${!s?"بلا رقم مسلسل":"بلا اسم"}${nm?" ("+nm+")":""}`);continue}
+    if(v==="abs"){errs.push(`صف ${row}: ${nm} — غائب أو بلا درجة`);continue}
+    if(typeof v!=="number"){errs.push(`صف ${row}: ${nm} — درجة غير مفهومة "${clean(r[m.v])}"`);continue}
+    const k=normSerial(s),o=seen.get(k);
+    if(o){if(o.n===nm&&o.v===v)errs.push(`صف ${row}: تكرار مطابق للمسلسل ${s} (تم تجاهله)`);else{conf++;errs.push(`⚠ صف ${row}: المسلسل ${s} مكرر باسم أو درجة مختلفة (${nm}) — راجعه`)}continue}
+    const n={s,n:nm,v:Math.round(v*100)/100};seen.set(k,n);out.push(n);
+  }
+  return{out,errs,read,conf};
+}
+function csvRows(t,d){const out=[];let r=[],c="",q=false;t=t.replace(/^\ufeff/,"");for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'&&t[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else if(ch==='"')q=true;else if(ch===d){r.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);c="";out.push(r);r=[]}else c+=ch}if(c||r.length){r.push(c);out.push(r)}return out.filter(r=>r.some(x=>clean(x)!==""))}
+function textToRows(t){
+  const lines=t.split(/\r?\n/).filter(l=>l.trim());if(!lines.length)return[];
+  const smp=lines.slice(0,12);let d=null,bc=0;
+  for(const c of["\t",";","|",","]){const n=smp.filter(l=>l.includes(c)).length;if(n>bc&&n>=Math.ceil(smp.length*.6)){bc=n;d=c}}
+  if(d)return csvRows(t,d);
+  return lines.map(l=>{const m=l.match(/^\s*(\S+)\s+(.+?)\s+([\d٠-٩][\d٠-٩.,٫\/]*)\s*$/);return m?[m[1],m[2],m[3]]:l.trim().split(/\s{2,}/)});
+}
+function decode(buf){const u=new Uint8Array(buf);if(u[0]===0xFF&&u[1]===0xFE)return new TextDecoder("utf-16le").decode(buf);if(u[0]===0xFE&&u[1]===0xFF)return new TextDecoder("utf-16be").decode(buf);try{return new TextDecoder("utf-8",{fatal:true}).decode(buf)}catch(e){return new TextDecoder("windows-1256").decode(buf)}}
+async function unzip(buf){
+  const u=new DataView(buf),a=new Uint8Array(buf);let e=a.length-22;while(e>=0&&u.getUint32(e,true)!==0x06054b50)e--;
+  if(e<0)throw new Error("الملف ليس بصيغة Excel/ODS حديثة");
+  const n=u.getUint16(e+10,true);let p=u.getUint32(e+16,true);const files={};
+  for(let i=0;i<n;i++){if(u.getUint32(p,true)!==0x02014b50)break;
+    const meth=u.getUint16(p+10,true),csz=u.getUint32(p+20,true),nl=u.getUint16(p+28,true),el=u.getUint16(p+30,true),cl=u.getUint16(p+32,true),lo=u.getUint32(p+42,true),name=new TextDecoder().decode(a.subarray(p+46,p+46+nl)),lnl=u.getUint16(lo+26,true),lel=u.getUint16(lo+28,true),ds=lo+30+lnl+lel;
+    files[name]={meth,raw:a.subarray(ds,ds+csz)};p+=46+nl+el+cl}
+  return files}
+async function inflate(f){if(f.meth===0)return f.raw;if(typeof DecompressionStream==="undefined")throw new Error("المتصفح قديم");const ds=new DecompressionStream("deflate-raw"),w=ds.writable.getWriter();w.write(f.raw);w.close();return new Uint8Array(await new Response(ds.readable).arrayBuffer())}
+const xmlP=s=>new DOMParser().parseFromString(s,"application/xml");
+async function readXlsx(buf){
+  const z=await unzip(buf),txt=async n=>z[n]?new TextDecoder().decode(await inflate(z[n])):null;
+  const wbx=await txt("xl/workbook.xml");if(!wbx)throw new Error("ليس ملف xlsx صالحًا");
+  const wb=xmlP(wbx),rel=xmlP(await txt("xl/_rels/workbook.xml.rels")||"<r/>"),map={},ss=[];
+  [...rel.getElementsByTagName("Relationship")].forEach(r=>map[r.getAttribute("Id")]=r.getAttribute("Target"));
+  const sst=await txt("xl/sharedStrings.xml");
+  if(sst)[...xmlP(sst).getElementsByTagName("si")].forEach(si=>{let t="";[...si.getElementsByTagName("t")].forEach(x=>{if(x.parentNode.nodeName!=="rPh")t+=x.textContent});ss.push(t)});
+  const out=[];
+  for(const sh of [...wb.getElementsByTagName("sheet")]){
+    const rid=sh.getAttribute("r:id")||sh.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships","id");let tg=map[rid]||"";tg=tg.startsWith("/")?tg.slice(1):"xl/"+tg;
+    const sx=await txt(tg);if(!sx)continue;const rows=[];let rn=0;
+    [...xmlP(sx).getElementsByTagName("row")].forEach(row=>{rn=+row.getAttribute("r")||rn+1;const arr=[];let cn=-1;
+      [...row.getElementsByTagName("c")].forEach(c=>{const ref=c.getAttribute("r");if(ref){cn=[...ref.match(/^[A-Za-z]+/)[0].toUpperCase()].reduce((x,ch)=>x*26+ch.charCodeAt(0)-64,0)-1}else cn++;
+        const t=c.getAttribute("t"),v=c.getElementsByTagName("v")[0];let val="";
+        if(t==="s")val=v&&ss[+v.textContent]!==undefined?ss[+v.textContent]:"";else if(t==="inlineStr")val=[...c.getElementsByTagName("t")].map(x=>x.textContent).join("");else if(v){val=v.textContent;if(!t||t==="n"){const n=parseFloat(val);val=isNaN(n)?val:n}}
+        arr[cn]=val});
+      for(let i=0;i<arr.length;i++)if(arr[i]===undefined)arr[i]="";rows[rn-1]=arr});
+    for(let i=0;i<rows.length;i++)if(!rows[i])rows[i]=[];
+    out.push({name:sh.getAttribute("name"),rows});}
+  return out}
+async function readOds(buf){
+  const z=await unzip(buf);if(!z["content.xml"])throw new Error("ليس ملف ods صالحًا");
+  const d=xmlP(new TextDecoder().decode(await inflate(z["content.xml"]))),out=[];
+  [...d.getElementsByTagName("table:table")].forEach(tb=>{const rows=[];
+    [...tb.getElementsByTagName("table:table-row")].forEach(tr=>{const rep=+(tr.getAttribute("table:number-rows-repeated")||1),arr=[];
+      [...tr.children].forEach(c=>{if(!/table-cell$/.test(c.nodeName))return;const cr=+(c.getAttribute("table:number-columns-repeated")||1),ov=c.getAttribute("office:value"),p=[...c.getElementsByTagName("text:p")].map(x=>x.textContent).join(" "),v=ov!==null&&c.getAttribute("office:value-type")!=="string"?parseFloat(ov):p;
+        if(cr>200&&v==="")return;for(let i=0;i<Math.min(cr,200);i++)arr.push(v)});
+      const empty=arr.every(x=>x===""||x===undefined);
+      if(empty){for(let i=0;i<Math.min(rep,5);i++)rows.push([]);return}
+      for(let i=0;i<Math.min(rep,200);i++)rows.push(arr.slice())});
+    while(rows.length&&rows[rows.length-1].every(x=>x===""||x===undefined))rows.pop();
+    out.push({name:tb.getAttribute("table:name"),rows})});
+  return out}
+async function fileToTables(f){
+  const ext=(f.name.split(".").pop()||"").toLowerCase(),buf=await f.arrayBuffer(),out=[];
+  if(["xlsx","xls","xlsm","xltx","xlsb","ods","fods"].includes(ext)){
+    let sheets=null,err=null;
+    if(["xlsx","xlsm","xltx","ods"].includes(ext)){try{sheets=ext==="ods"?await readOds(buf):await readXlsx(buf)}catch(e){err=e}}
+    if(!sheets){
+      if(typeof XLSX==="undefined")throw new Error(err?"تعذرت قراءة الملف ("+err.message+"). احفظه بصيغة CSV وأعد المحاولة.":"هذه الصيغة القديمة تحتاج مكتبة تُحمَّل من الإنترنت وهي غير متاحة الآن. احفظ الملف بصيغة xlsx أو CSV.");
+      const wb=XLSX.read(buf,{type:"array",cellDates:true});sheets=wb.SheetNames.map(n=>({name:n,rows:XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:"",raw:true,blankrows:true})}));
+    }
+    sheets.forEach(s=>{if(s.rows.some(r=>r&&r.some(c=>clean(c)!=="")))out.push({name:f.name+" › "+s.name,rows:s.rows})});
+  }else if(ext==="json"){
+    const j=JSON.parse(decode(buf)),arr=Array.isArray(j)?j:(Object.values(j).find(Array.isArray)||[]);
+    if(arr.length&&typeof arr[0]==="object"&&!Array.isArray(arr[0])){const keys=[...new Set(arr.flatMap(o=>Object.keys(o)))];out.push({name:f.name,rows:[keys,...arr.map(o=>keys.map(k=>o[k]==null?"":o[k]))]})}else out.push({name:f.name,rows:arr.map(r=>Array.isArray(r)?r:[r])});
+  }else if(ext==="html"||ext==="htm"){
+    const doc=new DOMParser().parseFromString(decode(buf),"text/html");
+    doc.querySelectorAll("table").forEach((tb,i)=>{const rows=[...tb.rows].map(r=>[...r.cells].map(c=>c.textContent));if(rows.length)out.push({name:f.name+" › جدول "+(i+1),rows})});
+  }else if(["pdf","doc","docx","png","jpg","jpeg","gif","bmp","zip","rar","pptx"].includes(ext)){
+    throw new Error("نوع "+ext.toUpperCase()+" غير مدعوم مباشرة. افتحه وانسخ الجدول والصقه في خانة النص بالأسفل، أو احفظه بصيغة Excel أو CSV.");
+  }else out.push({name:f.name,rows:textToRows(decode(buf))});
+  if(!out.length)throw new Error("لم أجد جدولًا داخل الملف.");
+  return out;
+}
+function mkTab(name,rows){const d=detect(rows),t={name,rows,hi:d.hi,map:d.map,use:true};const x=extract(t);t.use=x.out.length>0;return t}
+const RESET=()=>({name:"",max:100,tabs:[],pub:true,notes:[],ok:null});
+S.up=RESET();
+function merge(){const seen=new Map(),rows=[];let conf=0;S.up.tabs.filter(t=>t.use).forEach(t=>{const x=extract(t);conf+=x.conf;x.out.forEach(r=>{const k=normSerial(r.s),o=seen.get(k);if(o){if(o.n!==r.n||o.v!==r.v)conf++}else{seen.set(k,r);rows.push(r)}})});return{rows,conf}}
+function rUpload(){
+  const U=S.up,mg=merge();
+  const T=U.tabs.map((t,i)=>{const x=extract(t),hdr=t.hi>=0&&t.rows[t.hi]?t.rows[t.hi]:[],W=Math.max(1,...t.rows.slice(0,30).map(r=>r.length));
+    const opt=r=>`<option value="-1">—</option>`+Array.from({length:W},(_,c)=>`<option value="${c}" ${t.map[r]===c?"selected":""}>${esc(clean(hdr[c])||"عمود "+(c+1))}</option>`).join("");
+    return `<div class="card"><label style="display:flex;gap:8px;align-items:center;margin-top:0"><input type="checkbox" style="width:auto" data-use="${i}" ${t.use?"checked":""}> <b>${esc(t.name)}</b></label><div class="msg ${x.bad||x.errs.length?"err":"ok"}">قُرئ ${x.read} صفًا: ${x.out.length} صالح، ${x.errs.length} مستبعد/ملاحَظ</div>
+    <div class="row"><div><label>صف العناوين</label><select data-hi="${i}"><option value="-1" ${t.hi<0?"selected":""}>بدون عناوين</option>${Array.from({length:Math.min(12,t.rows.length)},(_,k)=>`<option value="${k}" ${t.hi===k?"selected":""}>الصف ${k+1}</option>`).join("")}</select></div>
+    <div><label>عمود المسلسل</label><select data-col="${i}|s">${opt("s")}</select></div><div><label>عمود الاسم</label><select data-col="${i}|n">${opt("n")}</select></div><div><label>عمود الدرجة</label><select data-col="${i}|v">${opt("v")}</select></div></div>
+    ${x.errs.length?`<details ${x.conf||x.bad?"open":""}><summary>الصفوف المستبعدة والملاحظات (${x.errs.length})</summary><div style="max-height:200px;overflow:auto">${x.errs.map(e=>`<div>${esc(e)}</div>`).join("")}</div></details>`:""}
+    <details open><summary>الصفوف المقروءة (${x.out.length})</summary><div class="tw" style="max-height:320px;overflow:auto"><table><tr><th>#</th><th>المسلسل</th><th>الاسم</th><th>الدرجة</th></tr>${x.out.slice(0,500).map((r,k)=>`<tr><td>${k+1}</td><td>${esc(r.s)}</td><td>${esc(r.n)}</td><td>${r.v}</td></tr>`).join("")}</table></div>${x.out.length>500?`<p class="sub">يعرض أول 500 صف فقط وسيتم حفظ الكل.</p>`:""}</details></div>`}).join("");
+  const max=+U.max||0,over=mg.rows.filter(r=>r.v>max).length,one=mg.rows.filter(r=>r.n.split(" ").length<2).length,dig=mg.rows.filter(r=>/\d/.test(r.n)).length;
+  const warn=[over?`${over} درجة أكبر من الدرجة النهائية (يجب تصحيحها قبل الحفظ)`:"",mg.conf?`${mg.conf} تعارض في أرقام المسلسل (يجب تصحيحه قبل الحفظ)`:"",one?`${one} اسم من كلمة واحدة فقط (لن يستطيع الطالب البحث بالاسم وحده)`:"",dig?`${dig} اسم يحتوي أرقامًا`:""].filter(Boolean);
+  $("#app").innerHTML=`<div class="card"><h2 style="margin-top:0">رفع نتائج امتحان</h2><div class="row"><div><label>اسم الامتحان</label><input id="en" value="${esc(U.name)}" placeholder="امتحان الشهر الأول"></div><div><label>الدرجة النهائية</label><input id="em" type="number" value="${esc(U.max)}"></div><div><label>الملفات (يمكن اختيار أكثر من ملف)</label><input id="ef" type="file" multiple></div></div>
+  <p class="sub">يقرأ: Excel بكل أوراقه، CSV/TSV/TXT (بأي ترميز عربي)، ODS، JSON، جداول HTML. أما PDF وWord فانسخ الجدول والصقه هنا:</p><textarea id="pt" rows="3" style="width:100%;font:inherit;padding:10px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--tx)" placeholder="الصق الجدول هنا (رقم المسلسل ثم الاسم ثم الدرجة في كل سطر)"></textarea><p><button class="btn g s" id="pb">قراءة النص الملصوق</button></p>${U.notes.map(n=>`<div class="msg err">${esc(n)}</div>`).join("")}</div>
+  ${T}${U.tabs.length?`<div class="card"><h3 style="margin-top:0">الإجمالي: ${mg.rows.length} طالب</h3>${warn.length?`<div class="msg err">${warn.map(esc).join("<br>")}</div>`:`<div class="msg ok">لا أخطاء. راجع الجدول أعلاه مقابل ملفك ثم احفظ.</div>`}<label><input type="checkbox" id="pub" ${U.pub?"checked":""} style="width:auto"> نشر فوريًا للطلاب</label><p><button class="btn r" id="sv">💾 حفظ الامتحان</button></p></div>`:""}`;
+  $("#en").oninput=e=>U.name=e.target.value;$("#em").oninput=e=>U.max=e.target.value;$("#em").onchange=()=>render();
+  if($("#pub"))$("#pub").onchange=e=>U.pub=e.target.checked;
+  $("#ef").onchange=async ev=>{U.notes=[];for(const f of ev.target.files){try{(await fileToTables(f)).forEach(t=>U.tabs.push(mkTab(t.name,t.rows)))}catch(x){U.notes.push(f.name+": "+x.message)}}render()};
+  $("#pb").onclick=()=>{U.notes=[];const rows=textToRows($("#pt").value);if(rows.length)U.tabs.push(mkTab("نص ملصوق",rows));else U.notes.push("الخانة فارغة.");render()};
+  document.querySelectorAll("[data-use]").forEach(c=>c.onchange=()=>{U.tabs[+c.dataset.use].use=c.checked;render()});
+  document.querySelectorAll("[data-hi]").forEach(c=>c.onchange=()=>{const t=U.tabs[+c.dataset.hi],d=detect(t.rows,+c.value);t.hi=d.hi;t.map=d.map;render()});
+  document.querySelectorAll("[data-col]").forEach(c=>c.onchange=()=>{const[i,r]=c.dataset.col.split("|");U.tabs[+i].map[r]=+c.value;render()});
+  if($("#sv"))$("#sv").onclick=save;
+}
+async function save(){
+  const U=S.up,name=U.name.trim(),max=+U.max,mg=merge();
+  const fail=m=>{U.notes=[m];render()};
+  if(!name||!(max>0))return fail("اكتب اسم الامتحان والدرجة النهائية.");
+  if(!mg.rows.length)return fail("لا توجد صفوف صالحة للحفظ.");
+  if(mg.conf)return fail(`يوجد ${mg.conf} تعارض في أرقام المسلسل. صحح الملف أو ألغِ تحديد الجدول المتعارض.`);
+  const over=mg.rows.filter(r=>r.v>max);if(over.length)return fail(`${over.length} درجة أكبر من الدرجة النهائية (${over[0].n}: ${over[0].v}). صحح الملف أو الدرجة النهائية.`);
+  const d={id:slug(name),name,max,published:U.pub,rows:mg.rows,date:dateS(),ts:Date.now()};
+  const old=S.exams.find(x=>x.id===d.id);if(old&&U.ok!==d.id){U.ok=d.id;return fail(`يوجد امتحان محفوظ بنفس الاسم "${old.name}" (${old.rows.length} طالب). اضغط حفظ مرة أخرى لاستبداله، أو غيّر اسم الامتحان.`)}
+  if(JSON.stringify(d).length>240000)return fail("الملف كبير جدًا (الحد حوالي 2500 طالب لكل امتحان). قسّمه إلى امتحانين.");
+  try{await DB.put("exams/"+d.id,d);S.sig="";await pull();S.up=RESET();S.note={t:"ok",m:`تم حفظ "${name}" (${d.rows.length} طالب)${d.published?" وهو منشور":""}.`+(!URLB&&d.published?" الخطوة التالية: اضغط «تصدير ملف الطلاب» وأرسل الملف الجديد للطلاب.":"")};S.tab="m"}
+  catch(x){return fail("فشل الحفظ: "+errMsg(x))}
+  render();
+}
+function rManage(){
+  $("#app").innerHTML=`<div class="card"><h2 style="margin-top:0">الامتحانات</h2><div class="msg ok">المزامنة: عند ربط قاعدة Firebase من الإعدادات، تنشر النتائج هنا وتصل إلى نسخة الطالب تلقائيًا خلال ثوانٍ (تتحقق نسخة الطالب من /public كل 5 ثوانٍ). صدّر ملف الطالب مرة واحدة بعد إعداد الرابط، ثم ارفعه على استضافة أو أرسل الرابط للطلاب. لا تعطِ بيانات الدخول للطلاب. اجعل Firebase يسمح بالقراءة من /public فقط للطلاب، مع منع قراءة /exams و/settings دون صلاحية المدرس. ${URLB?"الاتصال المركزي مضبوط حاليًا؛ يتم تحديث مسار public بالامتحانات المنشورة فقط.":"لم يتم إعداد قاعدة بيانات مركزية بعد؛ الملفات المصدّرة ستكون نسخة ثابتة ولن تتزامن تلقائيًا."}</div><p><button class="btn r" data-act="pubfile">📤 تصدير ملف الطلاب</button></p>${S.note?`<div class="msg ${S.note.t}">${esc(S.note.m)}</div>`:""}${S.exams.length?S.exams.map(e=>{const rk=ranks(e),avg=(e.rows.reduce((a,r)=>a+r.v,0)/e.rows.length).toFixed(1),ps=Math.round(e.rows.filter(r=>r.v/e.max*100>=S.set.pass).length/e.rows.length*100);return `<div class="card"><div class="h"><div><b>${esc(e.name)}</b> <span class="pill ${e.published?"":"r"}">${e.published?"منشور":"مخفي"}</span><div class="sub">${e.rows.length} طالب · المتوسط ${avg}/${e.max} · نجاح ${ps}% · الأعلى ${rk[0].v}</div></div><div><button class="btn s" data-pub="${esc(e.id)}">${e.published?"إخفاء":"نشر"}</button> <button class="btn s g" data-exp="${esc(e.id)}">تصدير CSV</button> <button class="btn s g" data-xlsx="${esc(e.id)}">Excel XLSX</button> <button class="btn s g" data-print="${esc(e.id)}">طباعة / PDF</button> <button class="btn s r" data-del="${esc(e.id)}">حذف</button></div></div><details><summary>عرض النتائج وتصفيتها</summary><input data-flt="${esc(e.id)}" placeholder="تصفية بالاسم أو الرقم" style="margin:10px 0"><div class="tw"><table data-tb="${esc(e.id)}">${tbl(e,"")}</table></div></details></div>`}).join(""):`<div class="msg ok">لا توجد امتحانات. ارفع أول ملف.</div>`}</div>`;
+  document.querySelectorAll("[data-flt]").forEach(i=>i.oninput=()=>{const e=S.exams.find(x=>x.id===i.dataset.flt);document.querySelector(`[data-tb="${i.dataset.flt}"]`).innerHTML=tbl(e,i.value)});
+}
+function tbl(e,q){const n=normName(q);return `<tr><th>الترتيب</th><th>المسلسل</th><th>الاسم</th><th>الدرجة</th><th>التقدير</th></tr>`+ranks(e).filter(r=>!n||normName(r.n).includes(n)||normSerial(r.s).includes(normSerial(q))).slice(0,200).map(r=>`<tr><td>${r.k}</td><td>${esc(r.s)}</td><td>${esc(r.n)}</td><td>${r.v}</td><td>${grade(r.v,e.max)}</td></tr>`).join("")}
+function rSettings(){
+  const s=S.set;
+  $("#app").innerHTML=`<div class="card"><h2 style="margin-top:0">الإعدادات</h2>${S.note?`<div class="msg ${S.note.t}">${esc(S.note.m)}</div>`:""}<div class="row"><div><label>عنوان البوابة</label><input id="st" value="${esc(s.title)}"></div><div><label>اسم المعلم (يظهر في الشهادة)</label><input id="sa" value="${esc(s.teacher)}"></div><div><label>نسبة النجاح %</label><input id="sp" type="number" value="${s.pass}"></div><div><label>عدد الأوائل المكرَّمين</label><input id="sn" type="number" min="1" max="20" value="${s.topN}"></div></div><label><input type="checkbox" id="m1" ${s.modeSerial!==false?"checked":""} style="width:auto"> السماح للطالب بالبحث برقم المسلسل فقط</label><label><input type="checkbox" id="m2" ${s.modeName!==false?"checked":""} style="width:auto"> السماح للطالب بالبحث بالاسم فقط (إن تكرر الاسم يُطلب منه المسلسل)</label><p><button class="btn r" id="ss">حفظ الإعدادات</button></p></div><div class="card"><h3 style="margin-top:0">قاعدة بيانات مركزية (للنشر الفوري)</h3><label>رابط قاعدة البيانات (Firebase Realtime Database)</label><input id="cu" value="${esc(URLB)}" placeholder="https://xxxx-default-rtdb.firebasedatabase.app" dir="ltr"><label>مفتاح الواجهة Web API Key (ليس سريًا)</label><input id="ck" value="${esc(KEY)}" dir="ltr"><h3 style="margin:18px 0 4px">قواعد بيانات إضافية (لتوزيع الضغط)</h3><label>سطر لكل قاعدة: الرابط، ثم | ثم Web API Key إن كانت في مشروع Firebase آخر (اتركه فارغًا إن كانت في نفس المشروع)</label><textarea id="cr" rows="3" dir="ltr" style="width:100%;font:inherit;padding:10px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--tx)" placeholder="https://xxxx-default-rtdb.firebasedatabase.app | AIza...">${esc(REPS.map(r=>r.url+(r.apiKey?" | "+r.apiKey:"")).join("\n"))}</textarea><p class="sub">يُنسخ مسار public تلقائيًا إلى كل قاعدة هنا، وكل جهاز طالب يقرأ من قاعدة واحدة تُختار له عشوائيًا مع التبديل التلقائي عند تعطل إحداها. يُستخدم نفس البريد وكلمة المرور لكل المشاريع.</p><label>بريد المعلم (المستخدم الذي أنشأته في Authentication)</label><input id="ce" type="email" value="${esc(AU.st().email||"")}" dir="ltr" autocomplete="username"><label>كلمة المرور</label><input id="cp" type="password" dir="ltr" autocomplete="current-password"><p><button class="btn" onclick="saveCfg()">تسجيل الدخول وحفظ</button> <button class="btn g s" onclick="testConn()">اختبار الاتصال</button>${AU.ok()?` <button class="btn r s" onclick="logoutCfg()">تسجيل الخروج</button>`:""}</p><div id="ctr">${AU.ok()?`<div class="msg ok">مسجَّل الدخول: ${esc(AU.st().email||"")}</div>`:""}</div><p class="sub">لا تعطِ ملف المعلم ولا بريدك وكلمة مرورك للطلاب أبدًا؛ ملف الطلاب لا يحتوي أي بيانات دخول. لإضافة مشرف: أنشئ له مستخدمًا في Firebase Authentication وأضف بريده إلى القواعد.</p></div>`;
+  $("#ss").onclick=async()=>{const d={title:$("#st").value||"بوابة نتائج الامتحانات",teacher:$("#sa").value||"المعلم",pass:+$("#sp").value||50,topN:Math.max(1,Math.min(20,+$("#sn").value||3)),modeSerial:$("#m1").checked,modeName:$("#m2").checked};
+    try{await DB.put("settings",d);Object.assign(S.set,d);S.note={t:"ok",m:"تم حفظ الإعدادات."}}catch(x){S.note={t:"err",m:"فشل الحفظ: "+errMsg(x)}}render()};
+}
+function studentHtml(){
+  const js=document.querySelector("script:not([src])").textContent;
+  const data=JSON.stringify({exams:Object.fromEntries(S.exams.filter(e=>e.published).map(e=>[e.id,e])),settings:S.set}).replace(/</g,"\\u003c").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
+  const out=js.replace('const MODE="teacher";',()=>'const MODE="student";').replace('const EMBED=null;',()=>"const EMBED="+data+";").replace(/const CFG=\{[^;]*\};/,()=>"const CFG="+JSON.stringify({url:URLB,apiKey:"",reps:REPS.map(r=>r.url)})+";").replace(/<\/script/gi,"<\\/script");
+  return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+esc(S.set.title)+'</title><style>'+document.querySelector("style").textContent+'</style></head><body><header><svg class="hero" viewBox="0 0 640 240" role="img" aria-label="كتاب وقبعة تخرج وكأس وشهادة"><defs><linearGradient id="hB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e92f3"/><stop offset="1" stop-color="#1565c0"/></linearGradient><linearGradient id="hR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6659"/><stop offset="1" stop-color="#d32f2f"/></linearGradient><linearGradient id="hG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe082"/><stop offset=".55" stop-color="#ffca28"/><stop offset="1" stop-color="#f9a825"/></linearGradient><radialGradient id="hGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5e92f3" stop-opacity=".45"/><stop offset="1" stop-color="#5e92f3" stop-opacity="0"/></radialGradient><filter id="hSh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#0d1b4c" flood-opacity=".28"/></filter></defs><ellipse cx="320" cy="118" rx="300" ry="112" fill="url(#hGlow)"/><ellipse cx="320" cy="222" rx="245" ry="11" fill="#0d1b4c" opacity=".16"/><g fill="#ffca28"><path d="M70 40l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" opacity=".9"/><path d="M590 34l4 9 10 1-8 7 2 10-9-5-9 5 2-10-8-7 10-1z" opacity=".9"/><circle cx="168" cy="30" r="4"/><circle cx="478" cy="26" r="3.5"/><circle cx="36" cy="132" r="3"/><circle cx="612" cy="140" r="3.5"/></g><g filter="url(#hSh)"><path d="M136 126v70c62-10 124-8 184 14 60-22 122-24 184-14v-70z" fill="url(#hB)"/><path d="M320 206c-58-22-118-24-170-15v-68c52-9 112-7 170 14z" fill="#fff"/><path d="M320 206c58-22 118-24 170-15v-68c-52-9-112-7-170 14z" fill="#f4f7ff"/><path d="M320 137v69" stroke="#c5d0ea" stroke-width="2" fill="none"/><g stroke="#c5d0ea" stroke-width="3" stroke-linecap="round" fill="none"><path d="M172 148c36-5 78-3 126 13"/><path d="M172 166c36-5 78-3 126 13"/><path d="M342 161c48-16 90-18 126-13"/><path d="M342 179c48-16 90-18 126-13"/></g><path d="M392 120h30v48l-15-11-15 11z" fill="url(#hR)"/></g><g filter="url(#hSh)"><path d="M262 76v34c0 14 116 14 116-0v-34l-58 22z" fill="#1b2c60" stroke="#7fa6f7" stroke-opacity=".5" stroke-width="2" stroke-linejoin="round"/><path d="M320 26l112 40-112 40-112-40z" fill="#22356b" stroke="#7fa6f7" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round"/><path d="M320 26l112 40-112 40z" fill="#24366b" opacity=".6"/><path d="M432 66v42" stroke="#ffca28" stroke-width="3.5" stroke-linecap="round"/><circle cx="432" cy="112" r="7" fill="url(#hR)"/><path d="M432 118l-6 18M432 118l6 18" stroke="#d32f2f" stroke-width="3.5" stroke-linecap="round"/><circle cx="320" cy="66" r="6" fill="url(#hG)"/></g><g filter="url(#hSh)" transform="rotate(-9 92 150)"><rect x="40" y="86" width="104" height="128" rx="10" fill="#fff"/><rect x="40" y="86" width="104" height="26" rx="10" fill="url(#hR)"/><rect x="40" y="100" width="104" height="12" fill="url(#hR)"/><g stroke="#c5d0ea" stroke-width="4" stroke-linecap="round"><path d="M54 132h76"/><path d="M54 148h58"/><path d="M54 164h68"/></g><circle cx="112" cy="190" r="17" fill="url(#hB)"/><path d="M103 190l7 7 12-14" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g fill="#fff" opacity=".95"><circle cx="58" cy="99" r="3"/><circle cx="70" cy="99" r="3"/></g></g><g filter="url(#hSh)"><path d="M520 92h-24c-2 24 8 38 26 42M580 92h24c2 24-8 38-26 42" fill="none" stroke="url(#hG)" stroke-width="9" stroke-linecap="round"/><path d="M516 78h68v36c0 24-14 40-34 40s-34-16-34-40z" fill="url(#hG)"/><path d="M526 84h12v54c-8-6-12-18-12-30z" fill="#fff" opacity=".35"/><path d="M550 98l5 10 11 2-8 8 2 11-10-6-10 6 2-11-8-8 11-2z" fill="#fff" opacity=".95"/><rect x="543" y="154" width="14" height="26" fill="#f9a825"/><rect x="520" y="178" width="60" height="12" rx="4" fill="url(#hR)"/><rect x="508" y="188" width="84" height="16" rx="5" fill="url(#hB)"/></g></svg><h1 id="ttl"></h1><p class="sub">ابحث عن نتيجتك برقم المسلسل والاسم</p></header><nav id="nav"></nav><main id="app"></main><div id="cert" class="hide"></div><script>'+out+'<\/script></body></html>';
+}
+function cert(id,serial){
+  const e=S.exams.find(x=>x.id===id),r=e&&ranks(e).find(x=>x.s===serial);if(!r)return;
+  const w=["","الأول","الثاني","الثالث"][r.k]||"ضمن الأوائل";
+  const html=`<div class="cert">${ILL.seal}<h2>🎓 شهادة تقدير وتكريم</h2><p>تتشرف إدارة ${esc(S.set.title)}</p><p>بتكريم الطالب/ة</p><div class="nm">${esc(r.n)}</div><p>لحصوله على المركز <b>${w}</b> في ${esc(e.name)}</p><p>بدرجة <b>${r.v} / ${e.max}</b> وتقدير <b>${grade(r.v,e.max)}</b></p><p>متمنين له دوام التفوق والنجاح</p><div class="sig"><span>التاريخ: ${dateS()}</span><span>المعلم: ${esc(S.set.teacher)}</span></div></div>`;
+  const c=$("#cert");c.classList.remove("hide");
+  c.innerHTML=`<div>${html}<p class="np" style="text-align:center"><button class="btn r" id="pr">🖨️ طباعة</button> <button class="btn" id="dl">⬇️ تحميل</button> <button class="btn g" id="cl">إغلاق</button></p></div>`;
+  $("#cl").onclick=()=>c.classList.add("hide");$("#pr").onclick=()=>window.print();
+  $("#dl").onclick=async()=>{try{const d=await claude.use("downloads");await d.save({filename:`certificate-${r.s}.html`,data:new Blob([`<!DOCTYPE html><html lang="ar" dir="rtl"><meta charset="utf-8"><body style="font-family:Tahoma;text-align:center;padding:30px">${html.replace(/<div class="cert">/,'<div style="border:12px double #1565c0;padding:30px;max-width:760px;margin:auto">')}</body></html>`],{type:"text/html"})})}catch(x){}}
+}
+document.addEventListener("click",async ev=>{
+  const b=ev.target.closest("button");if(!b)return;const D=b.dataset;
+  if(D.tab){S.tab=D.tab;S.note=null;S.res=null;if(!S.admin||D.tab==="s"||D.tab==="h"){const L=S.exams.filter(e=>e.published);if(!L.find(e=>e.id===S.sel))S.sel=""}render()}
+  else if(D.qm){S.qm=D.qm;S.res=null;S.q={s:"",n:""};render()}
+  else if(D.cert){const[a,...r]=D.cert.split("|");cert(a,r.join("|"))}
+  else if(D.pub){const e=S.exams.find(x=>x.id===D.pub);try{await DB.put("exams/"+e.id+"/published",!e.published);S.sig="";await pull();S.note={t:"ok",m:e.published?"تم إخفاء الامتحان.":"تم النشر، النتيجة متاحة للطلاب الآن."}}catch(x){S.note={t:"err",m:"فشل التحديث: "+errMsg(x)}}render()}
+  else if(D.del){if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="تأكيد الحذف؟";return}try{await DB.del("exams/"+D.del);S.sig="";await pull();S.note={t:"ok",m:"تم الحذف."}}catch(x){S.note={t:"err",m:"فشل الحذف: "+errMsg(x)}}render()}
+  else if(D.act==="pubfile"){if(!S.exams.some(e=>e.published)){S.note={t:"err",m:"لا توجد امتحانات منشورة. انشر امتحانًا أولًا ثم صدّر الملف."};return render()}try{const d=await claude.use("downloads");await d.save({filename:"student.html",data:new Blob([studentHtml()],{type:"text/html"})});S.note={t:"ok",m:URLB?"تم تنزيل ملف الطالب. سيقرأ النتائج المنشورة من قاعدة البيانات تلقائيًا؛ لا تحتاج لإعادة إرسال الملف عند تحديث النتائج، بشرط رفعه مرة واحدة على رابط ثابت/استضافة.":"تم تنزيل ملف الطالب كنسخة ثابتة. بدون قاعدة بيانات مركزية لا يمكن تحديثه تلقائيًا عبر أجهزة مختلفة؛ يلزم ربط قاعدة بيانات ثم نشر الملف مرة واحدة على رابط ثابت."}}catch(x){S.note={t:"err",m:"فشل التصدير"}}render()}
+  else if(D.xlsx){const e=S.exams.find(x=>x.id===D.xlsx);if(!e)return;const rows=[["الترتيب","المسلسل","الاسم","الدرجة","التقدير"],...ranks(e).map(r=>[r.k,r.s,r.n,r.v,grade(r.v,e.max)])],filename=(e.name.replace(/[\\/:*?"<>|]+/g,"-").trim()||"results");let fallback=false;if(window.XLSX){try{const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),"النتائج");XLSX.writeFile(wb,filename+".xlsx")}catch(x){fallback=true}}else fallback=true;if(fallback){S.note={t:"err",m:"مكتبة Excel غير متاحة؛ تم تنزيل CSV بديل يفتح في Excel."};const csv="\ufeff"+rows.map(row=>row.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download=filename+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);render()}}
+  else if(D.print){const e=S.exams.find(x=>x.id===D.print);if(e){const rows=ranks(e).map(r=>`<tr><td>${r.k}</td><td>${esc(r.s)}</td><td>${esc(r.n)}</td><td>${r.v}</td><td>${grade(r.v,e.max)}</td></tr>`).join("");const w=window.open("","_blank");if(w){w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>${esc(e.name)}</title><style>body{font-family:Tahoma,Arial;padding:20px}h1{text-align:center}table{width:100%;border-collapse:collapse}td,th{border:1px solid #888;padding:8px;text-align:right}@media print{button{display:none}}</style><h1>${esc(e.name)}</h1><p>${esc(S.set.title)} — ${esc(S.set.teacher)}</p><table><tr><th>الترتيب</th><th>المسلسل</th><th>الاسم</th><th>الدرجة</th><th>التقدير</th></tr>${rows}</table><button onclick="print()">طباعة / حفظ PDF</button></html>`);w.document.close()}}}
+  else if(D.exp){const e=S.exams.find(x=>x.id===D.exp),csv="\ufeff"+["المسلسل,الاسم,الدرجة,التقدير,الترتيب",...ranks(e).map(r=>[r.s,r.n,r.v,grade(r.v,e.max),r.k].map(c=>`"${String(c).replace(/"/g,'""')}"`).join(","))].join("\n");
+    try{const d=await claude.use("downloads");await d.save({filename:(e.name.replace(/[\\/:*?"<>|]+/g,"-").trim()||"results")+".csv",data:new Blob([csv],{type:"text/csv"})})}catch(x){}}
+});
+document.addEventListener("change",ev=>{if(ev.target.id==="fx"&&S.tab==="h"){S.sel=ev.target.value;render()}});
+saveCfg=async()=>{const url=$("#cu").value.trim().replace(/\/+$/,""),key=$("#ck").value.trim(),em=$("#ce").value.trim().toLowerCase(),pw=$("#cp").value,out=m=>{$("#ctr").innerHTML=m};
+  if(!url||!key||!em||!pw)return out(`<div class="msg err">أكمل الحقول الأربعة: الرابط، مفتاح الواجهة، البريد، كلمة المرور.</div>`);
+  out(`<div class="msg ok">جارٍ تسجيل الدخول…</div>`);
+  try{await AU.login(em,pw,key)}catch(x){return out(`<div class="msg err">تعذر تسجيل الدخول: ${esc(errMsg(x))}</div>`)}
+  const reps=parseReps();for(const r of reps){if(r.apiKey&&r.apiKey!==key){try{await RA.login(em,pw,r.apiKey)}catch(x){return out(`<div class="msg err">تعذر تسجيل الدخول في ${esc(r.url)}: ${esc(errMsg(x))}</div>`)}}}try{localStorage.setItem("rp_cfg",JSON.stringify({url,apiKey:key,reps}))}catch(e){}
+  location.reload()};
+function logoutCfg(){AU.out();try{localStorage.removeItem("rp_auth_r")}catch(e){}location.reload()}
+async function testConn(){const u=$("#cu").value.trim().replace(/\/+$/,""),out=m=>{$("#ctr").innerHTML=m},bad=(t,x)=>out(`<div class="msg err">${t}: ${esc(errMsg(x))}</div>`);
+  if(!u)return out(`<div class="msg err">اكتب رابط قاعدة البيانات أولًا.</div>`);
+  let t;try{t=await AU.token()}catch(x){return bad("لم تسجّل الدخول (اضغط تسجيل الدخول وحفظ أولًا)",x)}
+  try{const r=await fetch(u+"/.json?auth="+encodeURIComponent(t));if(!r.ok)throw new Error("HTTP "+r.status);await r.json()}catch(x){return bad("فشلت قراءة المعلم",x)}
+  try{const r=await fetch(u+"/ping.json?auth="+encodeURIComponent(t),{method:"PUT",body:JSON.stringify(Date.now())});if(!r.ok)throw new Error("HTTP "+r.status)}catch(x){return bad("القراءة تعمل لكن الكتابة فشلت",x)}
+  try{const r=await fetch(u+"/public.json");if(!r.ok)throw new Error("HTTP "+r.status);await r.json()}catch(x){return bad("قراءة الطلاب لمسار public فشلت (راجع القواعد)",x)}
+  const rl=[];let bd=false;for(const r of parseReps()){const nm=esc(repName(r.url));try{const t=await repTok(r);let x=await fetch(r.url+"/public/ping.json?auth="+encodeURIComponent(t),{method:"PUT",body:JSON.stringify(Date.now())});if(!x.ok)throw new Error("HTTP "+x.status);x=await fetch(r.url+"/public.json");if(!x.ok)throw new Error("HTTP "+x.status);rl.push("✅ "+nm)}catch(e){bd=true;rl.push("❌ "+nm+": "+esc(errMsg(e)))}}
+  out(`<div class="msg ${bd?"err":"ok"}">✅ القاعدة الأساسية سليمة: المعلم يقرأ ويكتب، والطلاب يقرؤون مسار public فقط.${rl.length?"<br>القواعد الإضافية:<br>"+rl.join("<br>"):""}</div>`)}
+async function pull(){
+  try{const d=await DB.get()||{},ex=Object.values(d.exams||{}).filter(e=>e&&e.rows).sort((x,y)=>y.ts-x.ts),sig=JSON.stringify([ex,d.settings]),first=!S.loaded,down=!S.db;S.db=true;S.err="";S.upd=new Date();if(MODE==="teacher"&&URLB&&AU.ok()){const pub={exams:Object.fromEntries(ex.filter(e=>e.published).map(e=>[e.id,e])),settings:d.settings||S.set,updatedAt:Date.now(),replicas:REPS.map(r=>r.url)};const ps=JSON.stringify(Object.assign({},pub,{updatedAt:0}));if(ps!==S.pubSig||REPS.some(r=>(S.repSig||{})[r.url]!==ps)){let warn="";if(ps!==S.pubSig){try{await DB.put("public",pub);S.pubSig=ps}catch(syncErr){warn="تعذر تحديث نسخة الطلاب تلقائيًا: "+errMsg(syncErr)+". راجع صلاحيات قاعدة البيانات."}}if(ps===S.pubSig){const bad=await mirrorPub(pub,ps);if(bad.length)warn=(warn?warn+" | ":"")+"قواعد إضافية لم تتحدث: "+bad.join(" ، ")}S.syncWarn=warn}}
+    if(sig!==S.sig){S.sig=sig;S.exams=ex;if(d.settings)Object.assign(S.set,d.settings);S.loaded=true;if(first||down||!(document.activeElement&&document.activeElement.matches&&document.activeElement.matches("input,select")))render()}else if(first||down){S.loaded=true;render()}
+  }catch(x){const was=S.db;S.db=false;S.err=errMsg(x);if(!S.loaded||was){S.loaded=true;render()}}
+}
+(()=>{S.db=true;render();pull();let busy=false;const sync=async()=>{if(busy||document.visibilityState==="hidden")return;busy=true;try{await pull()}finally{busy=false}};if(URLB||(!EMBED&&MODE!=="teacher"))setInterval(sync,30000);addEventListener("storage",e=>{if(e.key===LK)sync()});addEventListener("online",sync);addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")sync()})})();
+</script>
+</body>
+</html>
